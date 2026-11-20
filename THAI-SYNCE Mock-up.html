@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THAI-SYNC — Prototype (v2)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF9F6;--card:#F0EDE6;--green:#0F4C3A;--terra:#D95D39;--ink:#23302b;--mute:#646e69;--line:#ddd8cc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai','Prompt',sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5;flex-wrap:wrap;gap:10px}
+.logo{font-weight:700;font-size:20px;color:var(--green)} .logo span{color:var(--terra)}
+.badge{font-size:11px;padding:3px 9px;border-radius:999px;background:#efe7dc;color:var(--mute);font-weight:600;margin-left:8px}
+.switch{display:flex;background:var(--card);border-radius:999px;padding:4px}
+.switch button{border:0;background:none;padding:8px 16px;border-radius:999px;font:inherit;font-weight:600;cursor:pointer;color:var(--mute)}
+.switch button.on.sme{background:var(--terra);color:#fff}
+.switch button.on.ent{background:var(--green);color:#fff}
+main{max-width:1120px;margin:0 auto;padding:20px 24px}
+.view{display:none}.view.show{display:block}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:14px}
+h2{margin:0 0 10px;font-size:17px;color:var(--green)} h3{margin:0 0 8px;font-size:15px}
+.sme-wrap{max-width:420px;margin:0 auto;border:8px solid #2b2b2b;border-radius:34px;padding:15px;background:var(--bg);box-shadow:0 12px 36px #0002}
+.tag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:999px;background:#fff;color:var(--terra);font-weight:700}
+.tag.g{color:var(--green)} .tag.m{color:var(--mute)}
+.btn{border:0;border-radius:10px;padding:9px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:#fff;background:var(--terra)}
+.btn.g{background:var(--green)} .btn.outbtn{background:#fff;color:var(--green);border:1px solid var(--green)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.big{font-size:24px;font-weight:700;color:var(--green)}
+.sub{font-size:12px;color:var(--mute)}
+input[type=range]{width:100%;accent-color:var(--terra)}
+input[type=text],select{width:100%;padding:8px;border-radius:9px;border:1px solid var(--line);font:inherit;font-size:13px;background:#fff}
+.bar{height:9px;border-radius:6px;background:#fff;overflow:hidden}.bar>i{display:block;height:100%;background:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line)}
+.score{font-weight:700;padding:2px 9px;border-radius:999px;color:#fff;background:var(--green);font-size:12px}
+.score.mid{background:#c98a1b}
+.out{background:#fff;border-radius:10px;padding:9px 10px;font-size:12.5px;margin-top:8px;white-space:pre-line;line-height:1.45}
+.consent{background:#fff;border-radius:10px;padding:9px 10px;margin-top:6px;font-size:12.5px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.note{font-size:12px;color:var(--mute);text-align:center;margin-top:16px}
+details{margin-top:6px} summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--mute)}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <span class="logo">THAI<span>-SYNC</span></span>
+    <span class="badge">Prototype · ข้อมูลจำลองเพื่อสาธิต</span>
+  </div>
+  <div class="switch">
+    <button class="sme on" id="bSme">🌾 ผู้ประกอบการรายย่อย</button>
+    <button class="ent" id="bEnt">🏨 โรงแรม (Enterprise)</button>
+  </div>
+</header>
+
+<main>
+<!-- SME VIEW -->
+<section class="view show" id="vSme">
+ <div class="sme-wrap">
+  <div class="row">
+    <div><div class="sub">บัญชีวิสาหกิจ (ใช้ฟรี · ไม่มีค่าแรกเข้า)</div><b>วิสาหกิจชุมชนมะม่วงบ้านสวน</b></div>
+    <span class="tag g">ส่งตรงเวลา 96%</span>
+  </div>
+
+  <!-- Phase 1: Forecasted PO -->
+  <div class="card" style="margin-top:12px">
+    <div class="row"><span class="tag">เฟส 1 · PO ล่วงหน้าจาก AI</span><span class="sub">ยืนยันโดยฝ่ายจัดซื้อแล้ว</span></div>
+    <h3 style="margin-top:8px">Grand Siam Hotels (เชียงใหม่)</h3>
+    <div style="font-size:14px">มะม่วงอบแห้ง (หมวดคงทน) <b>500 กก.</b> · <b>฿125,000</b></div>
+    <div class="sub" style="margin:4px 0 10px">ส่งมอบใน 14 วัน · ปัจจัยพยากรณ์: อัตราเข้าพักไฮซีซัน +28%</div>
+    <button class="btn" id="accept">ยืนยันรับออเดอร์</button>
+    <div class="out" id="accOut" style="display:none"></div>
+  </div>
+
+  <!-- Phase 1: Lot ESG Logging -->
+  <div class="card">
+    <div class="row"><span class="tag g">เฟส 1 · บันทึกล็อต & คาร์บอน</span><span class="sub">Emission Factor</span></div>
+    <h3 style="margin-top:6px">ประมาณการ CO₂e ระดับล็อต</h3>
+    <select id="ship">
+      <option value="0.9">รถกระบะท้องถิ่น (ระยะ 35 กม.) — ~0.9 kg CO₂e/กก.</option>
+      <option value="1.2">ขนส่งร่วมภูมิภาค (ระยะ 120 กม.) — ~1.2 kg CO₂e/กก.</option>
+    </select>
+    <button class="btn g" style="margin-top:8px" id="logLot">บันทึกล็อต #LOT-2611</button>
+    <div class="out" id="lotOut">ยังไม่ได้บันทึกล็อต (ใช้ค่าประมาณจาก Emission Factor เช่น อบก./TGO)</div>
+  </div>
+
+  <!-- PDPA & Data Ownership -->
+  <div class="card">
+    <div class="row"><span class="tag g">PDPA · ข้อมูลเป็นของคุณ</span></div>
+    <div class="consent">
+      <span>แชร์สถานะส่งมอบและ CO₂e ล็อตนี้ให้โรงแรม<br><span class="sub">สัญญาห้ามนำข้อมูลไปใช้ต่อรองกดราคา</span></span>
+      <input type="checkbox" id="cHotel" checked>
+    </div>
+    <div class="consent">
+      <span>ยินยอมส่ง PO ที่ยืนยันแล้วให้ธนาคารพันธมิตร<br><span class="sub">ขอความยินยอมแยกต่างหาก (ปิดเป็นค่าเริ่มต้น)</span></span>
+      <input type="checkbox" id="cBank">
+    </div>
+    <button class="btn outbtn" style="margin-top:8px;width:100%" id="expBtn">ส่งออกข้อมูลของฉัน (Data Portability)</button>
+    <div class="out" id="expOut" style="display:none"></div>
+  </div>
+
+  <!-- Phase 2: Partner Bank Financing -->
+  <div class="card">
+    <div class="row"><span class="tag m">เฟส 2 · ต่อยอดผ่านธนาคารพันธมิตร</span></div>
+    <h3 style="margin-top:6px">ขอทุนหมุนเวียนจาก PO (Rule-based)</h3>
+    <div class="sub">ธนาคารพันธมิตรที่มีใบอนุญาตเป็นผู้พิจารณาและรับความเสี่ยง · ระยะแรกไม่ใช้ AI กล่องดำ</div>
+    <div class="out" id="bankOut">ต้องยืนยันรับออเดอร์ และเปิด "ยินยอมส่ง PO ให้ธนาคารพันธมิตร" ก่อน</div>
+    <button class="btn" style="margin-top:8px" id="sendBank" disabled>ส่งข้อมูล PO ไปยังธนาคารพันธมิตร</button>
+  </div>
+
+  <!-- Phase 3: Roadmap preview -->
+  <div class="card">
+    <details>
+      <summary>เฟส 3 (แผนอนาคต): Vision QC & GenAI ฉลากหลายภาษา</summary>
+      <div class="out">• Vision QC: ถ่ายภาพคัดเกรดสี/ขนาดก่อนส่งมอบ (เริ่มเมื่อมีข้อมูลภาพเพียงพอ)
+• GenAI Studio: ช่วยร่างคำบรรยายและฉลาก EN/中文/日本語 สำหรับตลาดส่งออก</div>
+    </details>
+  </div>
+ </div>
+</section>
+
+<!-- ENTERPRISE VIEW -->
+<section class="view" id="vEnt">
+  <div class="grid">
+    <div class="card">
+      <div class="sub">ความแม่นการพยากรณ์ (MAPE)</div>
+      <div class="big">11.4%</div>
+      <div class="sub">เป้า Pilot &lt;15% · เทียบวิธีสั่งเดิม</div>
+    </div>
+    <div class="card">
+      <div class="sub">เครือข่ายวิสาหกิจ (หมวดอาหารคงทน)</div>
+      <div class="big">5 ราย</div>
+      <div class="sub">คัดกรองออกใบกำกับภาษี/ใบเสร็จได้</div>
+    </div>
+    <div class="card">
+      <div class="sub">Scope 3 (ประมาณการระดับล็อต)</div>
+      <div class="big">84%</div>
+      <div class="sub">มีข้อมูลล็อต · ฐาน Emission Factor</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row" style="flex-wrap:wrap">
+      <div>
+        <h2>📈 พยากรณ์ความต้องการวัตถุดิบ (มะม่วงอบแห้ง กก./เดือน)</h2>
+        <div class="sub">โมเดล Holt-Winters + อัตราเข้าพัก/เทศกาล (เส้นเขียว = พยากรณ์ AI · เส้นประ = ค่าจริงปีก่อน)</div>
+      </div>
+      <button class="btn g" id="approvePo">ยืนยันออก PO 500 กก. (Human-in-the-loop)</button>
+    </div>
+    <svg id="chart" viewBox="0 0 720 205" style="width:100%;margin-top:8px"></svg>
+    <div class="out" id="poStatus" style="display:none"></div>
+  </div>
+
+  <div class="card">
+    <h2>🤝 เครือข่ายวิสาหกิจชุมชน (Explainable Reliability Score)</h2>
+    <table>
+      <thead><tr><th>วิสาหกิจ</th><th>จังหวัด</th><th>กำลังผลิต/เดือน</th><th>ส่งตรงเวลา</th><th>เหตุผลคะแนน</th><th>ประมาณ CO₂e/กก.</th><th>Score</th></tr></thead>
+      <tbody id="sup"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🌿 Scope 3 ESG Tracker (ประมาณการด้วย Emission Factor)</h2>
+    <div class="row"><span>ประมาณการปล่อยคาร์บอนล็อตสั่งซื้อ 500 กก.</span><b id="co2">—</b></div>
+    <div class="bar" style="margin:8px 0"><i id="co2bar"></i></div>
+    <div class="row">
+      <span class="sub">จัดสรรออเดอร์เน้นซัพพลายเออร์ท้องถิ่นคาร์บอนต่ำ (ตรวจย้อนกลับระดับล็อต/ผู้ผลิต)</span>
+      <label style="font-size:13px;font-weight:600"><input type="checkbox" id="eco" checked> เปิด</label>
+    </div>
+    <div class="out" id="co2note"></div>
+  </div>
+</section>
+
+<p class="note">ต้นแบบเพื่อสาธิต (Mockup v2) · ตัวเลขทั้งหมดเป็นข้อมูลจำลองเพื่อแสดงการทำงานของระบบ ยังไม่ได้ผ่านการทดสอบภาคสนาม (Validation)</p>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+function role(r){
+  $('vSme').classList.toggle('show',r==='sme');
+  $('vEnt').classList.toggle('show',r==='ent');
+  $('bSme').classList.toggle('on',r==='sme');
+  $('bEnt').classList.toggle('on',r==='ent');
+}
+$('bSme').onclick=()=>role('sme');
+$('bEnt').onclick=()=>role('ent');
+
+let accepted=false;
+function updateBank(){
+  const ok = accepted && $('cBank').checked;
+  $('sendBank').disabled = !ok;
+  if(!accepted) $('bankOut').textContent='ต้องยืนยันรับออเดอร์ และเปิด "ยินยอมส่ง PO ให้ธนาคารพันธมิตร" ก่อน';
+  else if(!$('cBank').checked) $('bankOut').textContent='รับออเดอร์แล้ว · กรุณาเปิดความยินยอมส่งข้อมูลให้ธนาคารพันธมิตรด้านบนหากต้องการขอสินเชื่อ';
+  else $('bankOut').textContent='พร้อมส่ง PO ที่ยืนยันแล้ว + ประวัติส่งตรงเวลา 96% (Rule-based) ให้ธนาคารพันธมิตรพิจารณา';
+}
+$('accept').onclick=()=>{
+  accepted=true; $('accept').disabled=true; $('accept').textContent='รับออเดอร์แล้ว ✓';
+  $('accOut').style.display='block';
+  $('accOut').textContent='ยืนยันออเดอร์ 500 กก. (฿125,000) กำหนดส่งใน 14 วัน\nข้อตกลงแพลตฟอร์ม: เครดิตเทอมไม่เกิน 30 วัน · ไม่มีค่าแรกเข้า';
+  updateBank();
+};
+$('cBank').onchange=updateBank;
+$('logLot').onclick=()=>{
+  const ef=parseFloat($('ship').value), tot=(500*ef).toFixed(0);
+  $('lotOut').textContent=`บันทึก #LOT-2611 สำเร็จ · ประมาณการ ${tot} kg CO₂e (${ef} kg/กก.)\nอ้างอิง Emission Factor (ข้อมูลจำลอง) · ${$('cHotel').checked?'แชร์ให้โรงแรมแล้วตามความยินยอม':'เก็บไว้เฉพาะฝั่งคุณ'}`;
+};
+$('expBtn').onclick=()=>{
+  $('expOut').style.display='block';
+  $('expOut').textContent='ส่งออกประวัติการส่งมอบและบันทึกคาร์บอนเป็นไฟล์ CSV/JSON (จำลอง) — คุณนำข้อมูลย้ายออกได้ทุกเมื่อ';
+};
+$('sendBank').onclick=()=>{
+  $('sendBank').disabled=true;
+  $('bankOut').textContent='✅ ส่งข้อมูล PO และประวัติการส่งมอบ (ตามความยินยอม) ไปยัง Bank Partner API แล้ว\nธนาคารพันธมิตรจะเป็นผู้พิจารณาอนุมัติวงเงินและอัตราดอกเบี้ยโดยตรง';
+};
+
+// Enterprise
+$('approvePo').onclick=()=>{
+  $('approvePo').disabled=true; $('approvePo').textContent='อนุมัติส่ง PO แล้ว ✓';
+  $('poStatus').style.display='block';
+  $('poStatus').textContent='ฝ่ายจัดซื้อตรวจสอบและยืนยัน PO 500 กก. ส่งไปยังวิสาหกิจที่เหมาะสมที่สุดแล้ว (Human-in-the-loop)';
+};
+const sups=[
+  ['บ้านสวนมะม่วง','เชียงใหม่',300,96,'ส่งตรงเวลา 12/12 ครั้ง',0.9],
+  ['ผลไม้ลุ่มน้ำปิง','ลำพูน',220,91,'ส่งตรงเวลา 10/11 ครั้ง',1.1],
+  ['สวนสุขใจ','จันทบุรี',400,88,'คุณภาพผ่าน 95%',1.4],
+  ['วิสาหกิจแปรรูปทับสะแก','ประจวบฯ',150,79,'ล่าช้า 2 ครั้งช่วงฤดูฝน',1.0],
+  ['กลุ่มแม่บ้านหนองมน','ชลบุรี',120,74,'ข้อมูลส่งมอบยังน้อย (4 ครั้ง)',1.7]
+];
+$('sup').innerHTML=sups.map(s=>`<tr><td><b>${s[0]}</b></td><td>${s[1]}</td><td>${s[2]} กก.</td><td>${s[3]}%</td><td class="sub">${s[4]}</td><td>~${s[5]}</td><td><span class="score ${s[3]<85?'mid':''}">${s[3]}</span></td></tr>`).join('');
+
+const fc=[320,340,380,450,520,610,640,590,500,430,400,470], ly=[300,310,350,400,460,520,560,520,470,410,380,430];
+const m=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const X=i=>40+i*(640/11), Y=v=>185-(v-250)*0.45;
+$('chart').innerHTML=`<polyline fill="none" stroke="#9aa" stroke-dasharray="5" stroke-width="2" points="${ly.map((v,i)=>X(i)+','+Y(v)).join(' ')}"/>
+<polyline fill="none" stroke="#0F4C3A" stroke-width="3" points="${fc.map((v,i)=>X(i)+','+Y(v)).join(' ')}"/>`+
+fc.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" fill="#0F4C3A"/><text x="${X(i)}" y="200" font-size="11" text-anchor="middle" fill="#646e69">${m[i]}</text>`).join('');
+
+function esg(){
+  const eco=$('eco').checked, base=500*1.35, v=eco?500*0.98:base;
+  $('co2').textContent='~'+v.toFixed(0)+' kg CO₂e/ล็อต';
+  $('co2bar').style.width=(v/base*100)+'%';
+  $('co2note').textContent=eco
+    ? `ประมาณการลดลง ~${(base-v).toFixed(0)} kg CO₂e (-${Math.round((1-v/base)*100)}%) เทียบกับการจัดซื้อที่ไม่คำนึงระยะทาง\nหมายเหตุ: คำนวณจาก Emission Factor อ้างอิง (เช่น อบก./TGO) ระดับล็อต ไม่ใช่การวัดจริงรายฟาร์ม (ข้อมูลจำลอง)`
+    : 'จัดสรรตามราคาอย่างเดียว (ไม่ได้คำนึงระยะทางและค่าคาร์บอน)';
+}
+$('eco').onchange=esg; esg();
+</script>
+</body>
+</html>
